@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import registerImage from '../assets/register.png';
 import useSignUp from '../hooks/useSignUp';
 
-export const Register = () => {
+const Register = () => {
   const { loading, error, registerUser } = useSignUp();
   const handleRegister = (values) => {
     registerUser(values);
@@ -67,7 +67,7 @@ export const Register = () => {
               <Input.Password size='large' placeholder='Enter your password' />
             </Form.Item>
             <Form.Item
-              label='Password'
+              label='Confirm Password'
               name='passwordConfirm'
               rules={[
                 {
@@ -84,7 +84,6 @@ export const Register = () => {
                 description={error}
                 type="error"
                 showIcon
-                closable
                 className="alert"
               />
             )}
@@ -114,5 +113,4 @@ export const Register = () => {
     </Card>
   );
 };
-
 export default Register;

@@ -29,3 +29,18 @@ body{
 .alert{
     margin-bottom: 1.5rem;
 }
+
+/* profiie */
+.profile-card{
+    width: 500px;
+}
+.avatar{
+    margin-bottom: 1.5rem;
+}
+.username{
+    text-transform: capitalize;
+}
+.profile-btn{
+    margin-top: 1.3rem;
+    width: 100%;
+}

@@ -7,7 +7,8 @@ exports.signup = async (req, res, next) => {
     try {
         const user = await User.findOne({ email: req.body.email })
         if (user) {
-            return next(new createError(400, 'User already exists'))
+            res.status(400)
+            return next(new createError('User already exists', 400))
         }
         const hashedPassword = await bcrypt.hash(req.body.password, 10)
         const newUser = await User.create({
@@ -41,12 +42,14 @@ exports.login = async (req, res, next) => {
         const user = await User.findOne({ email })
 
         if(!user) {
+            res.status(404)
             return next(new createError('User not found', 404))
         }
         
         const isPasswordValid = await bcrypt.compare(password, user.password)
         if(!isPasswordValid) {
-            return new createError('Invalid email or password', 401)
+            res.status(401)
+            return next(new createError('Invalid email or password', 401))
         }
         // assign JWT to user
         const token = jwt.sign({ _id: user._id }, "secretkey123", {
@@ -67,3 +70,23 @@ exports.login = async (req, res, next) => {
         next(error)
     }
 }
+
+
+exports.checkEmailExists = async (req, res, next) => {
+    try {
+        const { email } = req.body;
+        const user = await User.findOne({ email });
+
+        if (user) {
+            res.status(400);
+            return next(new createError('User with this email already exists', 400));
+        }
+
+        res.status(200).json({
+            status: 'success',
+            message: 'Email is available',
+        });
+    } catch (error) {
+        next(error);
+    }
+};

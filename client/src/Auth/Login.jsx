@@ -2,12 +2,13 @@ import React from 'react'
 import { Card, Flex, Form, Input, Typography, Button, Alert, Spin } from 'antd';
 import { Link } from 'react-router-dom';
 import loginImage from '../assets/login.png';
+import useLogin from '../hooks/useLogin';
 
 
 const Login = () => {
-
+  const { loading, error, loginUser } = useLogin();
   const handleLogin = async (values) => {
-    console.log(values);
+    await loginUser(values);
   };
   return (
     <Card className='form-container'>
@@ -60,7 +61,7 @@ const Login = () => {
             </Form.Item>
             
 
-            {/* {error && (
+            {error && (
               <Alert
                 description={error}
                 type="error"
@@ -68,16 +69,15 @@ const Login = () => {
                 closable
                 className="alert"
               />
-            )} */}
+            )} 
             <Form.Item>
               <Button
-                // type={${loading ? '' : 'primary'}}
+                type={`${loading ? '' : 'primary'}`}
                 htmlType='submit'
                 size='large'
                 className='btn'
               >
-                {/* {{loading ? '<Spin />' : 'Create Account'}} */}
-                Sign In
+               {loading ? <Spin /> : 'Sign In'}
               </Button>
             </Form.Item>
             <Form.Item>
