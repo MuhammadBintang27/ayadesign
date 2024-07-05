@@ -1,10 +1,17 @@
 import React from 'react';
+import'../Auth.css'
 import { Card, Flex, Form, Input, Typography, Button, Alert, Spin } from 'antd';
 import { Link } from 'react-router-dom';
 import registerImage from '../assets/register.png';
 import useSignUp from '../hooks/useSignUp';
-
+import { useEffect } from 'react';
 const Register = () => {
+  useEffect(() => {
+    document.body.classList.add('auth-body');
+    return () => {
+        document.body.classList.remove('auth-body');
+    };
+  }, []);
   const { loading, error, registerUser } = useSignUp();
   const handleRegister = (values) => {
     registerUser(values);
@@ -14,12 +21,19 @@ const Register = () => {
     <Card className='form-container'>
       <Flex gap="large" align='center'>
         {/* <RegisterForm /> */}
+
         <Flex vertical flex={1}>
-          <Typography.Title Level={3} strong className='title'>
-            Create an account
-          </Typography.Title>
+          <div className=' flex mb-4'>
+            <div className=" link-back">
+              <Link to="/">← </Link>
+            </div>
+            <span className='mr-7 ml-7'></span>
+            <h1 className='inline-block font-bold text-3xl'>Create an</h1>
+            <span className='mr-2'></span>
+            <h1 className='inline-block font-bold text-3xl color1'> Account</h1>
+          </div>
           <Typography.Text type='secondary' strong className='slogan'>
-            Join for exclusive access!
+            Let's own creativity effortlessly!
           </Typography.Text>
           <Form
             layout='vertical'
@@ -89,19 +103,17 @@ const Register = () => {
             )}
             <Form.Item>
               <Button
-                type={`${loading ? '' : 'primary'}`}
+                type={`${loading ? '' : 'auth-btn'}`}
                 htmlType='submit'
                 size='large'
-                className='btn'
+                className='text-white auth-btn'
               >
-                {loading ? <Spin /> : 'Create Account'}
+                {loading ? <Spin /> : 'Sign Up'}
               </Button>
             </Form.Item>
-            <Form.Item>
-              <Link to='/login'>
-                <Button size='large' className='btn'>Sign In</Button>
-              </Link>
-            </Form.Item>
+            <div className='text-center -mt-2'>
+              <p>Already have an account? <Link to='/login' className='font-medium text-primary-600 hover:text-red-700'>Sign In</Link></p>
+            </div>
           </Form>
 
         </Flex>
