@@ -7,6 +7,7 @@ import { Navigate } from 'react-router-dom';
 import { useAuth } from './contexts/AuthContext';
 import Nav from './Components/Nav';
 import AboutUs from './Pages/user/AboutUs';
+import Update from './Pages/user/update';
 
 const App = () => {
   const { isAuthenticated } = useAuth()
@@ -16,8 +17,8 @@ const App = () => {
         <Route path='/' element={!isAuthenticated ? <AboutUs /> : <Navigate to="/dashboard" />} /> 
         <Route path="/login" element={!isAuthenticated ? <Login/> : <Navigate to="/dashboard" />} />
         <Route path="/register" element={!isAuthenticated ? <Register/> : <Navigate to="/dashboard" />} />
-        <Route path="/dashboard" element={isAuthenticated ? <AboutUs /> : <AboutUs />} />
-        <Route path="/nav" element={<Nav></Nav>} />
+        <Route path="/dashboard" element={isAuthenticated ? <Update /> : <AboutUs />} />
+        <Route path="/profile" element={<Update></Update>} />
 
       </Routes>
     </Router>

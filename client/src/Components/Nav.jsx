@@ -8,7 +8,7 @@ import ProfileModal from '../Pages/user/ProfileModal'
 const Nav = () => {
     const { isAuthenticated, userData } = useAuth();
     const [isModalVisible, setIsModalVisible] = useState(false);
-    const firstName = isAuthenticated ? userData.name.split(' ')[0] : null;
+    const firstName = isAuthenticated ? userData?.name : null; // Gunakan optional chaining (?.)
     const showModal = () => {
         setIsModalVisible(true);
     };
@@ -16,7 +16,7 @@ const Nav = () => {
     const closeModal = () => {
         setIsModalVisible(false);
     };
-    
+
     return (
         <header className="text-gray-600 body-font">
             <div className="container mx-auto flex flex-wrap p-5 flex-col md:flex-row items-center">
@@ -25,8 +25,7 @@ const Nav = () => {
                 </Link>
 
                 {isAuthenticated ? (
-                    
-                    userData.usertype === 'admin' ? (
+                    userData?.usertype === 'admin' ? (
                         <nav className="md:ml-auto flex flex-wrap items-center text-base justify-center">
                             <Link to="/dashboard" className="mr-5 hover:text-gray-900 text-xl">Dashboard</Link>
                             <Link to="/admin/users" className="mr-5 hover:text-gray-900 text-xl">Manajemen Pengguna</Link>
@@ -51,12 +50,23 @@ const Nav = () => {
                                     </svg>
                                 </button>
                             </Link>
-                            <div
-                                className=" mt-6 ml-9 flex flex-col items-center cursor-pointer"
-                                onClick={showModal}>
-                                <img src="../profilLogo.png" alt="profil" className='w-[30px]' />
-                                <span className="text-[10px]">{firstName}</span>
+                            <div className="mt-6 ml-9 flex flex-col items-center cursor-pointer" onClick={showModal}>
+                                {userData.image && userData.image.url ? (
+                                    <img
+                                        src={userData.image.url}
+                                        alt="Profile"
+                                        className="w-[30px] h-[30px] rounded-full object-cover"
+                                    />
+                                ) : (
+                                    <img
+                                        src="../profilLogo.png" // Gambar placeholder jika userData.img.url tidak tersedia
+                                        alt="Profile"
+                                        className="w-[30px] h-[30px] rounded-full object-cover"
+                                    />
+                                )}
+                                <span className="text-xs mt-1">{firstName}</span>
                             </div>
+
 
                         </nav>
 
