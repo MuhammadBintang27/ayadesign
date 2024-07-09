@@ -15,8 +15,6 @@ const AboutUs = () => {
                         <h1 className="title-font sm:text-2xl text-xl mb-4 font-medium text-gray-900">About Us</h1>
                         <p className="mb-8 leading-relaxed text-xl">ayadsign adalah tempat dimana kamu bisa memesan jasa design kekinian dengan acrylic frame nya yang dipromosikan melalui akun Instagram. Yuk, jangan lupa di-follow dulu! <a href="https://www.instagram.com/ayadsign?igsh=MWVibXhjanltcTc2aQ==">@ayadsign</a>.</p>
                     </div>
-                    <Link to='/login' className='font-medium text-primary-600 hover:text-red-700'>Sign Up</Link>
-                    <Link to='/register' className='font-medium text-primary-600 hover:text-red-700'>Sign Up</Link>
                 </div>
             </section>
 

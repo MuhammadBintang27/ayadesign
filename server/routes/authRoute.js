@@ -20,6 +20,7 @@ const upload = multer({ storage: storage });
 
 router.post('/upload-image', protect, upload.single('image'), authController.uploadImage);
 router.put('/profile-update', protect, authController.updateProfileController); 
+router.put('/change-password', protect, authController.changePassword);
 router.post('/signup', authController.signup);
 router.post('/login', authController.login);
 
