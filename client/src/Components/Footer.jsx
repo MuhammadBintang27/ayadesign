@@ -11,10 +11,10 @@ const Footer = () => {
                             <h2 className="title-font font-medium text-gray-900 tracking-widest text-sm mb-3">Help</h2>
                             <nav className="list-none mb-10">
                                 <li>
-                                    <Link to="/how_to_order" className="text-gray-600 hover:text-gray-800">How to Order</Link>
+                                    <Link to="/HowToOrder" className="text-gray-600 hover:text-gray-800">How to Order</Link>
                                 </li>
                                 <li>
-                                    <Link to="/faq" className="text-gray-600 hover:text-gray-800">FAQs</Link>
+                                    <Link to="/Faq" className="text-gray-600 hover:text-gray-800">FAQs</Link>
                                 </li>
                             </nav>
                             <h2 className="title-font font-medium text-gray-900 tracking-widest text-sm mb-3">Contact</h2>

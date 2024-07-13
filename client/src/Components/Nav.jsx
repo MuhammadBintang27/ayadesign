@@ -37,7 +37,7 @@ const Nav = () => {
                         <nav className="md:ml-auto flex flex-wrap items-center text-base justify-center">
                             <Link to="/" className="mr-5 hover:text-gray-900 text-xl">Home</Link>
                             <Link to="/about" className="mr-5 hover:text-gray-900 text-xl">About Us</Link>
-                            <Link to="/shop" className="mr-5 hover:text-gray-900 text-xl">Go Shopping</Link>
+                            <Link to="/ProductCatalog" className="mr-5 hover:text-gray-900 text-xl">Go Shopping</Link>
                             <Link to="/cart">
                                 <button type="submit" className="font-sans block mt-4 lg:inline-block lg:mt-0 lg:ml-6 align-middle text-black hover:text-gray-700 relative flex items-center">
                                     <svg className="flex-1 w-8 h-8" viewBox="0 0 24 24">
@@ -75,7 +75,7 @@ const Nav = () => {
                     <nav className="md:ml-auto flex flex-wrap items-center text-base justify-center">
                         <Link to="/" className="mr-5 hover:text-gray-900 text-xl">Home</Link>
                         <Link to="/about" className="mr-5 hover:text-gray-900 text-xl">About Us</Link>
-                        <Link to="/shop" className="mr-5 hover:text-gray-900 text-xl">Go Shopping</Link>
+                        <Link to="/ProductCatalog" className="mr-5 hover:text-gray-900 text-xl">Go Shopping</Link>
                         <Link to="/cart">
                             <button type="submit" className="font-sans block mt-4 lg:inline-block lg:mt-0 lg:ml-6 align-middle text-black hover:text-gray-700 relative flex items-center">
                                 <svg className="flex-1 w-8 h-8" viewBox="0 0 24 24">

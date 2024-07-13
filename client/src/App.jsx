@@ -8,6 +8,11 @@ import { useAuth } from './contexts/AuthContext';
 import Nav from './Components/Nav';
 import AboutUs from './Pages/user/AboutUs';
 import UpdateProfile from './Pages/user/UpdateProfile';
+import Faq from './Pages/user/Faq';
+import HowToOrder from './Pages/user/HowToOrder';
+import ProductCatalog from './Pages/user/ProductCatalog';
+import InsertDataPage from './Pages/admin/InsertDataPage';
+import ProductDetail from './Pages/user/ProductDetail';
 
 const App = () => {
   const { isAuthenticated } = useAuth()
@@ -20,7 +25,12 @@ const App = () => {
         <Route path="/dashboard" element={isAuthenticated ? <Dashboard /> : <Dashboard />} />
         <Route path="/profile" element={isAuthenticated ? <UpdateProfile/> : <Navigate to="/dashboard" />} />
         <Route path="/about" element={<AboutUs />} />
-
+        <Route path="/Faq" element={<Faq />} />
+        <Route path="/HowToOrder" element={<HowToOrder />} />
+        <Route path="/productcatalog" element={<ProductCatalog />} />
+        <Route path="/productdetail/:id" element={<ProductDetail />} />
+        <Route path="/insert" element={<InsertDataPage />} />
+        
 
       </Routes>
     </Router>

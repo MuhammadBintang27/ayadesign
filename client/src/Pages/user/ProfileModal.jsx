@@ -9,7 +9,6 @@ import { Link } from 'react-router-dom';
 
 const ProfileModal = ({ visible, handleClose }) => {
     const { userData, logout, isAuthenticated } = useAuth();
-    console.log(userData);
 
 
     const handleLogout = async () => {
