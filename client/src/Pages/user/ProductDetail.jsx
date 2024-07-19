@@ -1,15 +1,74 @@
-import React from 'react';
-import { useLocation } from 'react-router-dom';
-import Nav from '../../Components/Nav';
+import React, { useState, useRef } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
+import { Button, notification } from 'antd';
 
 const ProductDetail = () => {
     const location = useLocation();
+    const navigate = useNavigate();
     const { item } = location.state;
 
-    console.log('Item:', item);
-    console.log('Image URL:', item.imageUrl);
+    const [formData, setFormData] = useState({});
+    const inputRefs = useRef({});
 
+    // Function to handle form submission
+    const handleSubmit = async () => {
+        const newData = {
+            title: inputRefs.current.judul.value, // Memasukkan judul ke dalam newData
+            name: '', // Kolom untuk nama yang digabung
+            description: '', // Kolom untuk deskripsi yang digabung
+            imageUrl: item.imageUrl, // Mendapatkan dari item
+            price: item.price, // Mendapatkan dari item
+        };
+
+        for (let i = 1; i <= item.formQuantity; i++) {
+            if (i > 1) {
+                newData.name += ', ';
+                newData.description += ', ';
+            }
+            newData.name += inputRefs.current[`nama${i}`]?.value || '';
+            newData.description += inputRefs.current[`deskripsi${i}`]?.value || '';
+        }
+
+        setFormData(newData);
+
+        try {
+            const response = await fetch('http://localhost:3000/api/cart', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(newData),
+            });
+
+            if (!response.ok) {
+                throw new Error('Failed to submit form');
+            }
+
+            const result = await response.json();
+
+            setFormData({});
+
+            // Show notification
+            notification.success({
+                message: 'Success',
+                description: 'Item telah dimasukkan ke keranjang',
+            });
+
+            // Redirect to /productcatalog
+            navigate('/productcatalog');
+        } catch (error) {
+            console.error('Error submitting form:', error);
+
+            // Show error notification
+            notification.error({
+                message: 'Error',
+                description: 'Gagal mengirim form',
+            });
+        }
+    };
+
+    // Generating fields dynamically
     const fields = [];
     for (let i = 1; i <= item.formQuantity; i++) {
         fields.push(
@@ -17,6 +76,7 @@ const ProductDetail = () => {
                 <div className="w-full md:w-1/2 pr-2">
                     <input
                         type="text"
+                        ref={el => inputRefs.current[`nama${i}`] = el}
                         id={`nama${i}`}
                         name={`nama${i}`}
                         placeholder={`Nama(${i})`}
@@ -26,6 +86,7 @@ const ProductDetail = () => {
                 <div className="w-full md:w-1/2 pl-2">
                     <input
                         type="text"
+                        ref={el => inputRefs.current[`deskripsi${i}`] = el}
                         id={`deskripsi${i}`}
                         name={`deskripsi${i}`}
                         placeholder={`Deskripsi(${i})`}
@@ -70,7 +131,8 @@ const ProductDetail = () => {
                 <div className="mb-8">
                     <input
                         type="text"
-                        id="field1"
+                        ref={el => inputRefs.current.judul = el}
+                        id="judul"
                         name="judul"
                         placeholder="Judul Banner"
                         className="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
@@ -82,6 +144,13 @@ const ProductDetail = () => {
                         {fields}
                     </>
                 )}
+                <div className="mb-4">
+                    <button
+                        onClick={handleSubmit}
+                        className='inline-flex items-center justify-center px-4 py-2 text-white bg-[#BA6264] border border-transparent rounded-xl font-medium hover:bg-[#A65253] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#BA6264] shadow-lg transition-all duration-300 ease-in-out transform hover:-translate-y-1 hover:shadow-xl'>
+                        Add To Cart
+                    </button>
+                </div>
             </div>
         </div>
     );

@@ -13,6 +13,8 @@ import HowToOrder from './Pages/user/HowToOrder';
 import ProductCatalog from './Pages/user/ProductCatalog';
 import InsertDataPage from './Pages/admin/InsertDataPage';
 import ProductDetail from './Pages/user/ProductDetail';
+import CartPage from './Pages/user/CartPage';
+import OrderDetail from './Pages/user/OrderDetail';
 
 const App = () => {
   const { isAuthenticated } = useAuth()
@@ -29,7 +31,10 @@ const App = () => {
         <Route path="/HowToOrder" element={<HowToOrder />} />
         <Route path="/productcatalog" element={<ProductCatalog />} />
         <Route path="/productdetail/:id" element={<ProductDetail />} />
+        <Route path="/cart" element={<CartPage />} />
+        <Route path="/cart/detail/" element={<OrderDetail />} />
         <Route path="/insert" element={<InsertDataPage />} />
+        
         
 
       </Routes>

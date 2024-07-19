@@ -31,7 +31,7 @@ const Dashboard = () => {
           {isAuthenticated ? (
   <div className="w-full sm:px-4 mb-6">
     <Link
-      to="/go_shopping"
+      to="/productcatalog"
       className="inline-flex items-center justify-center px-4 py-2 text-white bg-[#BA6264] border border-transparent rounded-xl font-medium hover:bg-[#a55253] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#BA6264] shadow-lg transition-all duration-300 ease-in-out transform hover:-translate-y-1 hover:shadow-xl"
     >
       Go Shopping
@@ -46,7 +46,7 @@ const Dashboard = () => {
       Get Started
     </Link>
     <Link
-      to="/go_shopping"
+      to="/productcatalog"
       className="inline-flex items-center justify-center px-4 py-2 text-white bg-[#BA6264] border border-transparent rounded-xl font-medium hover:bg-[#a55253] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#BA6264] shadow-lg transition-all duration-300 ease-in-out transform hover:-translate-y-1 hover:shadow-xl ml-4"
     >
       Go Shopping
