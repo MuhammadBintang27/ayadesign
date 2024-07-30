@@ -15,11 +15,13 @@ import InsertDataPage from './Pages/admin/InsertDataPage';
 import ProductDetail from './Pages/user/ProductDetail';
 import CartPage from './Pages/user/CartPage';
 import OrderDetail from './Pages/user/OrderDetail';
+import ScrollToTop from './Components/Elements/ScrollToTop';
 
 const App = () => {
   const { isAuthenticated } = useAuth()
   return (
     <Router>
+      <ScrollToTop></ScrollToTop>
       <Routes>
         <Route path='/' element={!isAuthenticated ? <Dashboard /> : <Navigate to="/dashboard" />} /> 
         <Route path="/login" element={!isAuthenticated ? <Login/> : <Navigate to="/dashboard" />} />
@@ -34,9 +36,7 @@ const App = () => {
         <Route path="/cart" element={<CartPage />} />
         <Route path="/cart/detail/" element={<OrderDetail />} />
         <Route path="/insert" element={<InsertDataPage />} />
-        
-        
-
+      
       </Routes>
     </Router>
   );

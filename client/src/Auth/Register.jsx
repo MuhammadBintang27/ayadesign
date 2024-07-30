@@ -21,7 +21,6 @@ const Register = () => {
     <Card className='form-container'>
       <Flex gap="large" align='center'>
         {/* <RegisterForm /> */}
-
         <Flex vertical flex={1}>
           <div className=' flex mb-4'>
             <div className=" link-back">

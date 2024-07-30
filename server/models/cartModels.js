@@ -1,26 +1,17 @@
-const mongoose = require("mongoose");
+const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
 
-const cartSchema = new mongoose.Schema({
-    title: {
-        type: String,
-        required: true,
-    },
-    name: {
-        type: String,
-    },
-    description: {
-        type: String,
-    },
-    imageUrl: {
-        type: String,
-        required: true,
-    },
-    price: {
-        type: String, // Menyesuaikan dengan tipe data yang sesuai dengan kebutuhan
-        required: true,
-    },
+// Define the Cart schema
+const cartSchema = new Schema({
+    title: { type: String, required: true },
+    name: { type: String },
+    description: { type: String },
+    imageUrl: { type: String, required: true },
+    price: { type: String, required: true },
+    user: { type: Schema.Types.ObjectId, ref: 'User', required: true } // Reference to the User
 });
 
-const Cart = mongoose.model("Cart", cartSchema); // Nama model disesuaikan dengan "Cart"
+// Create the Cart model
+const Cart = mongoose.model('Cart', cartSchema);
 
 module.exports = Cart;

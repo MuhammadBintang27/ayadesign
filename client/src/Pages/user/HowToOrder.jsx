@@ -1,10 +1,9 @@
 import React from 'react';
-import Nav from '../../Components/Nav';
-import Footer from '../../Components/Footer';
+import Layout from '../../Components/Layouts/Layout';
+
 const HowToOrder = () => {
     return (
-        <div>
-            <Nav></Nav>
+        <Layout>
             <section className="text-gray-600 body-font mb-20">
                 <div className="container px-5 py-24 mx-auto">
                     <div className="flex flex-col text-center w-full mb-12">
@@ -37,8 +36,7 @@ const HowToOrder = () => {
                     <p className="lg:w-2/3 mx-auto leading-relaxed text-base text-center mt-20 font-bold">Thank You For Visit Us!</p>
                 </div>
             </section>
-            <Footer></Footer>
-        </div>
+        </Layout>
     );
 }
 

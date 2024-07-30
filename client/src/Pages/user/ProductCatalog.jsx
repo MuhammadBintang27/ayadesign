@@ -4,8 +4,7 @@ import OwlCarousel from 'react-owl-carousel';
 import 'owl.carousel/dist/assets/owl.carousel.css';
 import 'owl.carousel/dist/assets/owl.theme.default.css';
 import axios from 'axios';
-import Footer from '../../Components/Footer';
-import Nav from '../../Components/Nav';
+import Layout from '../../Components/Layouts/Layout';
 
 const ProductCatalog = () => {
     const [photocardItems, setPhotocardItems] = useState([]);
@@ -57,8 +56,7 @@ const ProductCatalog = () => {
     };
 
     return (
-        <>
-            <Nav />
+        <Layout>
             <section className="text-gray-600 body-font mt-20 mx-[70px]" style={{ marginBottom: '250px' }}>
                 <h1 className="text-center judul text-xl mb-10">Photocard</h1>
                 <div className="container px-5 py-8 mx-auto">
@@ -110,8 +108,7 @@ const ProductCatalog = () => {
                     </OwlCarousel>
                 </div>
             </section>
-            <Footer />
-        </>
+        </Layout>
     );
 };
 

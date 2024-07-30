@@ -1,19 +1,11 @@
-const mongoose = require("mongoose");
+const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
 
-const userSchema = new mongoose.Schema({
-    name: {
-        type: String,
-        required: true,
-    },
-    email: {
-        type: String,
-        required: true,
-        unique: true,
-    },
-    password: {
-        type: String,
-        required: true,
-    },
+// Define the User schema
+const userSchema = new Schema({
+    name: { type: String, required: true, unique: true },
+    email: { type: String, required: true, unique: true },
+    password: { type: String, required: true },
     role: {
         type: String,
         enum: ["user", "admin"],
@@ -23,6 +15,10 @@ const userSchema = new mongoose.Schema({
         url: String,
         public_id: String,
     },
+    cart: [{ type: Schema.Types.ObjectId, ref: 'Cart' }] // Reference to Cart items
 });
-const User = mongoose.model("users", userSchema)
-module.exports = User
+
+// Create the User model
+const User = mongoose.model('User', userSchema);
+
+module.exports = User;

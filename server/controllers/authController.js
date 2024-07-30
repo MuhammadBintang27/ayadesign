@@ -29,7 +29,8 @@ exports.signup = async (req, res, next) => {
         name: newUser.name,
         email: newUser.email,
         role: newUser.role,
-        image: newUser.image
+        image: newUser.image,
+        cart: newUser.cart
       }
     });
   } catch (error) {
@@ -64,7 +65,8 @@ exports.login = async (req, res, next) => {
         name: user.name,
         email: user.email,
         role: user.role,
-        image: user.image
+        image: user.image,
+        cart: user.cart
       }
     });
   } catch (error) {

@@ -2,23 +2,35 @@ import React, { useState, useRef } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import { Button, notification } from 'antd';
+import { useAuth } from '../../contexts/AuthContext';
 
 const ProductDetail = () => {
     const location = useLocation();
     const navigate = useNavigate();
     const { item } = location.state;
+    const { userData, isAuthenticated } = useAuth();
 
     const [formData, setFormData] = useState({});
     const inputRefs = useRef({});
 
     // Function to handle form submission
     const handleSubmit = async () => {
+        if (!isAuthenticated) {
+            notification.warning({
+                message: 'Warning',
+                description: 'Please login to add items to the cart.',
+            });
+            navigate('/login'); // Redirect to login page if not authenticated
+            return;
+        }
+
         const newData = {
-            title: inputRefs.current.judul.value, // Memasukkan judul ke dalam newData
-            name: '', // Kolom untuk nama yang digabung
-            description: '', // Kolom untuk deskripsi yang digabung
-            imageUrl: item.imageUrl, // Mendapatkan dari item
-            price: item.price, // Mendapatkan dari item
+            title: inputRefs.current.judul.value,
+            name: '',
+            description: '',
+            imageUrl: item.imageUrl,
+            price: item.price,
+            user_id: userData._id // Ensure this is correctly set to a valid user ID
         };
 
         for (let i = 1; i <= item.formQuantity; i++) {
@@ -41,29 +53,27 @@ const ProductDetail = () => {
                 body: JSON.stringify(newData),
             });
 
-            if (!response.ok) {
-                throw new Error('Failed to submit form');
-            }
-
             const result = await response.json();
+
+            if (!response.ok) {
+                console.error('Response error:', result); // Log the error response from the server
+                throw new Error(result.error || 'Failed to submit form');
+            }
 
             setFormData({});
 
-            // Show notification
             notification.success({
                 message: 'Success',
                 description: 'Item telah dimasukkan ke keranjang',
             });
 
-            // Redirect to /productcatalog
             navigate('/productcatalog');
         } catch (error) {
             console.error('Error submitting form:', error);
 
-            // Show error notification
             notification.error({
                 message: 'Error',
-                description: 'Gagal mengirim form',
+                description: error.message || 'Gagal mengirim form',
             });
         }
     };
@@ -145,11 +155,12 @@ const ProductDetail = () => {
                     </>
                 )}
                 <div className="mb-4">
-                    <button
+                    <Button
                         onClick={handleSubmit}
-                        className='inline-flex items-center justify-center px-4 py-2 text-white bg-[#BA6264] border border-transparent rounded-xl font-medium hover:bg-[#A65253] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#BA6264] shadow-lg transition-all duration-300 ease-in-out transform hover:-translate-y-1 hover:shadow-xl'>
+                        className='inline-flex items-center justify-center px-4 py-2 text-white bg-[#BA6264] border border-transparent rounded-xl font-medium hover:bg-[#A65253] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#BA6264] shadow-lg transition-all duration-300 ease-in-out transform hover:-translate-y-1 hover:shadow-xl'
+                    >
                         Add To Cart
-                    </button>
+                    </Button>
                 </div>
             </div>
         </div>

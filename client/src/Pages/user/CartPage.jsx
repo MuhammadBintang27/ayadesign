@@ -1,88 +1,141 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Button, notification } from 'antd';
+import { useAuth } from '../../contexts/AuthContext';
 
 const CartPage = () => {
   const [orders, setOrders] = useState([]);
+  const [loading, setLoading] = useState(true); // Add loading state
   const navigate = useNavigate();
+  const { userData, isAuthenticated, token } = useAuth(); // Make sure token is included
 
   useEffect(() => {
-    // Fetch orders from your API
+    if (!isAuthenticated) {
+      navigate('/login'); // Redirect if not authenticated
+      return;
+    }
+
     const fetchOrders = async () => {
       try {
-        const response = await fetch('http://localhost:3000/api/cart');
+        const response = await fetch('http://localhost:3000/api/cart', {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`, // Include token in header
+          },
+        });
+
+        if (!response.ok) {
+          throw new Error('Failed to fetch orders');
+        }
+
         const data = await response.json();
-        setOrders(data); // Set orders to the array received from API
+        setOrders(data);
       } catch (error) {
         console.error('Failed to fetch orders:', error);
+        notification.error({
+          message: 'Error',
+          description: 'Failed to fetch orders',
+        });
+      } finally {
+        setLoading(false); // Set loading to false once data is fetched or an error occurs
       }
     };
 
     fetchOrders();
-  }, []);
+  }, [isAuthenticated, token, navigate]);
 
   const handleRemove = async (orderId) => {
     try {
-        const response = await fetch(`http://localhost:3000/api/cart/${orderId}`, {
-            method: 'DELETE',
-        });
-
-        if (!response.ok) {
-            const errorData = await response.json(); // Ambil data error dari respons
-            throw new Error(errorData.message || 'Failed to remove item from cart');
-        }
-
-        const deletedItem = await response.json(); // Ambil data item yang dihapus
-        setOrders(orders.filter(order => order._id !== orderId)); 
-        notification.success({
-            message: 'Success',
-            description: 'Item has been removed from cart',
-        });
-    } catch (error) {
-        console.error('Failed to remove item from cart:', error);
-        notification.error({
-            message: 'Error',
-            description: 'Failed to remove item from cart',
-        });
-    }
-};
-
-
-
-  const handleCheckout = async () => {
-    // Implement checkout logic here
-    try {
-      const response = await fetch('http://localhost:3000/api/checkout', {
-        method: 'POST',
-        body: JSON.stringify({ orders }),
+      const response = await fetch(`http://localhost:3000/api/cart/${orderId}`, {
+        method: 'DELETE',
         headers: {
-          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`, // Include token in header
+          'Content-Type': 'application/json', // Optional but recommended
         },
       });
 
       if (!response.ok) {
-        throw new Error('Failed to proceed to checkout');
+        const errorData = await response.json();
+        throw new Error(errorData.message || 'Failed to remove item from cart');
       }
+
+      // No need to parse JSON if the backend response doesn't contain a body after deletion
+      setOrders(orders.filter(order => order._id !== orderId));
 
       notification.success({
         message: 'Success',
-        description: 'Checkout successful',
-      })
-      navigate('/checkout');
+        description: 'Item has been removed from cart',
+      });
+    } catch (error) {
+      console.error('Failed to remove item from cart:', error);
+      notification.error({
+        message: 'Error',
+        description: 'Failed to remove item from cart',
+      });
+    }
+  };
+
+  const handleCheckout = async () => {
+    try {
+      const response = await fetch('http://localhost:3000/api/checkout', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`, // Include token in header
+        },
+      });
+  
+      // Check if the response is in JSON format
+      const contentType = response.headers.get('Content-Type');
+      if (!response.ok) {
+        let errorMessage = 'Failed to proceed to checkout';
+        if (contentType && contentType.includes('application/json')) {
+          const errorData = await response.json();
+          errorMessage = errorData.message || errorMessage;
+        }
+        throw new Error(errorMessage);
+      }
+  
+      // If response is JSON
+      if (contentType && contentType.includes('application/json')) {
+        const result = await response.json();
+        notification.success({
+          message: 'Success',
+          description: result.message || 'Checkout successful',
+          duration: 3,
+        });
+      } else {
+        // If response is not JSON, handle it as text
+        const result = await response.text();
+        notification.success({
+          message: 'Success',
+          description: result || 'Checkout successful',
+          duration: 3,
+        });
+      }
+  
+      navigate('/');
     } catch (error) {
       console.error('Failed to proceed to checkout:', error);
       notification.error({
         message: 'Error',
-        description: 'Failed to proceed to checkout',
+        description: error.message || 'Failed to proceed to checkout',
       });
     }
   };
+  
+
 
   const handleOrderDetailClick = (order) => {
     navigate(`/cart/detail`, { state: { order } });
   };
 
   const totalharga = orders.reduce((total, order) => total + parseInt(order.price.replace(/[^\d]/g, '')), 0);
+
+  if (loading) {
+    return <div>Loading...</div>; // Placeholder while data is being fetched
+  }
 
   return (
     <section className="py-8 antialiased dark:bg-gray-900 md:py-16">
