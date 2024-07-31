@@ -78,52 +78,65 @@ const CartPage = () => {
 
   const handleCheckout = async () => {
     try {
-      const response = await fetch('http://localhost:3000/api/checkout', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`, // Include token in header
-        },
-      });
-  
-      // Check if the response is in JSON format
-      const contentType = response.headers.get('Content-Type');
-      if (!response.ok) {
-        let errorMessage = 'Failed to proceed to checkout';
-        if (contentType && contentType.includes('application/json')) {
-          const errorData = await response.json();
-          errorMessage = errorData.message || errorMessage;
+        const response = await fetch('http://localhost:3000/api/checkout', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`, // Include token in header
+            },
+        });
+
+        // Check if the response is in JSON format
+        const contentType = response.headers.get('Content-Type');
+        if (!response.ok) {
+            let errorMessage = 'Failed to proceed to checkout';
+            if (contentType && contentType.includes('application/json')) {
+                const errorData = await response.json();
+                errorMessage = errorData.message || errorMessage;
+            }
+            throw new Error(errorMessage);
         }
-        throw new Error(errorMessage);
-      }
-  
-      // If response is JSON
-      if (contentType && contentType.includes('application/json')) {
-        const result = await response.json();
-        notification.success({
-          message: 'Success',
-          description: result.message || 'Checkout successful',
-          duration: 3,
-        });
-      } else {
-        // If response is not JSON, handle it as text
-        const result = await response.text();
-        notification.success({
-          message: 'Success',
-          description: result || 'Checkout successful',
-          duration: 3,
-        });
-      }
-  
-      navigate('/');
+
+        // If response is JSON
+        if (contentType && contentType.includes('application/json')) {
+            const result = await response.json();
+            notification.success({
+                message: 'Success',
+                description: result.message || 'Checkout successful',
+                duration: 3,
+            });
+
+            // Redirect to WhatsApp in a new tab and refresh the current tab
+            if (result.whatsappLink) {
+                window.open(result.whatsappLink, '_blank');
+                window.location.reload(); // Refresh the current tab
+            } else {
+                // Fallback if the WhatsApp link is not present
+                navigate('/');
+            }
+        } else {
+            // If response is not JSON, handle it as text
+            const result = await response.text();
+            notification.success({
+                message: 'Success',
+                description: result || 'Checkout successful',
+                duration: 3,
+            });
+
+            // Refresh the current tab if necessary
+            window.location.reload(); // Refresh the current tab
+        }
     } catch (error) {
-      console.error('Failed to proceed to checkout:', error);
-      notification.error({
-        message: 'Error',
-        description: error.message || 'Failed to proceed to checkout',
-      });
+        console.error('Failed to proceed to checkout:', error);
+        notification.error({
+            message: 'Error',
+            description: error.message || 'Failed to proceed to checkout',
+        });
     }
-  };
+};
+
+
+
   
 
 
