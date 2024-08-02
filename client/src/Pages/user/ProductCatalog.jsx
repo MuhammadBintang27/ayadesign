@@ -5,6 +5,7 @@ import 'owl.carousel/dist/assets/owl.carousel.css';
 import 'owl.carousel/dist/assets/owl.theme.default.css';
 import axios from 'axios';
 import Layout from '../../Components/Layouts/Layout';
+import { baseURL } from '../../api/private.client';
 
 const ProductCatalog = () => {
     const [photocardItems, setPhotocardItems] = useState([]);
@@ -40,7 +41,7 @@ const ProductCatalog = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await axios.get('http://localhost:3000/api/imageCaraousel');
+                const response = await axios.get(baseURL + '/imageCaraousel');
                 setPhotocardItems(response.data.photocardItems);
                 setBannerItems(response.data.bannerItems);
             } catch (error) {

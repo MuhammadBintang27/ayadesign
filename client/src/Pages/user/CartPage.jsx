@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Button, notification } from 'antd';
 import { useAuth } from '../../contexts/AuthContext';
+import { baseURL } from '../../api/private.client';
 
 const CartPage = () => {
   const [orders, setOrders] = useState([]);
@@ -17,7 +18,7 @@ const CartPage = () => {
 
     const fetchOrders = async () => {
       try {
-        const response = await fetch('http://localhost:3000/api/cart', {
+        const response = await fetch(baseURL + '/cart', {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json',
@@ -47,7 +48,7 @@ const CartPage = () => {
 
   const handleRemove = async (orderId) => {
     try {
-      const response = await fetch(`http://localhost:3000/api/cart/${orderId}`, {
+      const response = await fetch(baseURL + `/cart/${orderId}`, {
         method: 'DELETE',
         headers: {
           'Authorization': `Bearer ${token}`, // Include token in header
@@ -78,7 +79,7 @@ const CartPage = () => {
 
   const handleCheckout = async () => {
     try {
-        const response = await fetch('http://localhost:3000/api/checkout', {
+        const response = await fetch(baseURL + '/checkout', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -134,11 +135,6 @@ const CartPage = () => {
         });
     }
 };
-
-
-
-  
-
 
   const handleOrderDetailClick = (order) => {
     navigate(`/cart/detail`, { state: { order } });

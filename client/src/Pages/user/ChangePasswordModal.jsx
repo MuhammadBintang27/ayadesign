@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { toast } from 'react-toastify';
+import { baseURL } from '../../api/private.client';
 
 const ChangePasswordModal = ({ isOpen, onClose }) => {
   const [oldPassword, setOldPassword] = useState('');
@@ -21,7 +22,7 @@ const ChangePasswordModal = ({ isOpen, onClose }) => {
       const token = localStorage.getItem('user_token');
 
       const { data } = await axios.put(
-        'http://localhost:3000/api/auth/change-password',
+        baseURL + '/auth/change-password',
         {
           oldPassword,
           newPassword,

@@ -1,6 +1,7 @@
 import { message } from "antd"
 import { useState } from "react"
 import { useAuth } from "../contexts/AuthContext"
+import { baseURL } from "../api/private.client"
 
 const useSignUp = () => {
     const {login} = useAuth()
@@ -14,7 +15,7 @@ const useSignUp = () => {
         try{
             setError(null)
             setLoading(true)
-            const res = await fetch('http://localhost:3000/api/auth/signup', {
+            const res = await fetch(baseURL + '/auth/signup', {
                 method: 'POST',
                 headers: {'Content-Type': 'application/json'},
                 body: JSON.stringify(values),

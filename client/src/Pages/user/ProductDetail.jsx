@@ -3,6 +3,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import { Button, notification } from 'antd';
 import { useAuth } from '../../contexts/AuthContext';
+import { baseURL } from '../../api/private.client';
 
 const ProductDetail = () => {
     const location = useLocation();
@@ -45,7 +46,7 @@ const ProductDetail = () => {
         setFormData(newData);
 
         try {
-            const response = await fetch('http://localhost:3000/api/cart', {
+            const response = await fetch(baseURL + '/cart', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

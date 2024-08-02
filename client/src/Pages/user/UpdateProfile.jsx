@@ -7,6 +7,7 @@ import { useAuth } from '../../contexts/AuthContext';
 import Footer from '../../Components/Footer';
 import Nav from '../../Components/Nav';
 import ChangePasswordModal from './ChangePasswordModal'; // Pastikan path-nya sesuai dengan struktur proyek Anda
+import { baseURL } from '../../api/private.client';
 
 const UpdateProfile = () => {
   const [image, setImage] = useState({});
@@ -34,7 +35,7 @@ const UpdateProfile = () => {
       const token = localStorage.getItem('user_token');
 
       setUploading(true);
-      const { data } = await axios.post('http://localhost:3000/api/auth/upload-image', formData, {
+      const { data } = await axios.post(baseURL + '/auth/upload-image', formData, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -59,7 +60,7 @@ const UpdateProfile = () => {
 
       setLoading(true);
       const { data } = await axios.put(
-        'http://localhost:3000/api/auth/profile-update',
+        baseURL + '/auth/profile-update',
         {
           name,
           image,

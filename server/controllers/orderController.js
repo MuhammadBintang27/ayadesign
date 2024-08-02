@@ -1,18 +1,11 @@
 const Cart = require('../models/cartModels');
 const User = require('../models/userModels'); // Ensure you have a User model
 const { Transaksi, TransaksiItem } = require('../models/transactionModel'); // Adjust the path as needed
-
+const verifyTokenAndGetUserId = require('../utils/verifyToken');
 const mongoose = require('mongoose');
 const jwt = require('jsonwebtoken');
 
-const verifyTokenAndGetUserId = (token) => {
-    try {
-        const decoded = jwt.verify(token, 'secretkey123'); // Pastikan kunci rahasia sesuai
-        return decoded._id;
-    } catch (error) {
-        return null;
-    }
-};
+
 
 exports.addToCart = async (req, res) => {
     try {

@@ -4,6 +4,7 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const path = require('path');
 const fs = require('fs');
+const { JWT_KEY } = require('../utils/constant');
 
 exports.signup = async (req, res, next) => {
   try {
@@ -17,7 +18,7 @@ exports.signup = async (req, res, next) => {
       ...req.body,
       password: hashedPassword
     });
-    const token = jwt.sign({ _id: newUser._id }, "secretkey123", {
+    const token = jwt.sign({ _id: newUser._id }, JWT_KEY, {
       expiresIn: '90d'
     });
     res.status(201).json({
@@ -53,7 +54,7 @@ exports.login = async (req, res, next) => {
       res.status(401);
       return next(new createError('Invalid email or password', 401));
     }
-    const token = jwt.sign({ _id: user._id }, "secretkey123", {
+    const token = jwt.sign({ _id: user._id }, JWT_KEY, {
       expiresIn: '90d'
     });
     res.status(200).json({
