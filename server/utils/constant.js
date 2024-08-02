@@ -3,8 +3,8 @@ const dotenv = require('dotenv');
 dotenv.config();
 
 const JWT_KEY = process.env.JWT_SECRET;
-const MONGO_URL = process.env.MONGO_URL;
+const MONGO_URI = process.env.MONGO_URI;
 module.exports = {
   JWT_KEY,
-  MONGO_URL
+  MONGO_URI
 };
