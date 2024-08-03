@@ -12,7 +12,8 @@ app.use(cors(
     {
         origin: ["https://ayadesign.vercel.app"],
         methods: ["GET", "POST", "PUT", "DELETE"],
-        credentials: true
+        credentials: true,
+        allowedHeaders: ['Content-Type', 'Authorization'] 
     }
 ));
 app.use(express.json());
