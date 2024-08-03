@@ -15,6 +15,9 @@ app.use(express.json());
 app.use('/api/auth', authRouter);
 app.use('/uploads', express.static(path.join(__dirname, '../../client/public/uploads'))); // Serving static files
 app.use('/api', orderRoute);
+app.get('/', (req, res) => {
+    res.send('Server is up and running!');
+})
 
 
 
