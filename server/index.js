@@ -20,7 +20,7 @@ app.use('/api', orderRoute);
 
 // MongoDB Connection
 mongoose
-    .connect(process.env.MONGO_URI)
+    .connect("mongodb+srv://bintang:tes@designaya.psydxrh.mongodb.net/designaya?retryWrites=true&w=majority")
     .then(() => console.log("MongoDB connected"))
     .catch((err) => console.error('Failed to connect to MongoDB', err));
 
@@ -35,7 +35,7 @@ app.use((err, req, res, next) => {
 });
 
 // Server
-const PORT = process.env.PORT || 3000;
+const PORT = 3000;
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
 });
