@@ -5,7 +5,6 @@ const cors = require("cors");
 const path = require("path");
 const authRouter = require('./routes/authRoute');
 const orderRoute = require('./routes/orderRoute');
-const { MONGO_URI } = require("./utils/constant");
 mongoose.set('strictQuery', true);
 
 // Middlewares
@@ -21,7 +20,7 @@ app.use('/api', orderRoute);
 
 // MongoDB Connection
 mongoose
-    .connect(MONGO_URI)
+    .connect(process.env.MONGO_URI)
     .then(() => console.log("MongoDB connected"))
     .catch((err) => console.error('Failed to connect to MongoDB', err));
 
@@ -36,7 +35,7 @@ app.use((err, req, res, next) => {
 });
 
 // Server
-const PORT = process.env.PORT;
+const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
 });
