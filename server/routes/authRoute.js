@@ -6,7 +6,8 @@ const { protect } = require('../middlewares/authMiddleware');
 const path = require('path');
 
 const router = express.Router();
-
+router.post('/signup', authController.signup);
+router.post('/login', authController.login);
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
       cb(null, path.join(__dirname, '../../client/public/uploads')); 
@@ -21,7 +22,6 @@ const upload = multer({ storage: storage });
 router.post('/upload-image', protect, upload.single('image'), authController.uploadImage);
 router.put('/profile-update', protect, authController.updateProfileController); 
 router.put('/change-password', protect, authController.changePassword);
-router.post('/signup', authController.signup);
-router.post('/login', authController.login);
+
 
 module.exports = router;

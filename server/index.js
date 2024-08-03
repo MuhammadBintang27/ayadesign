@@ -21,7 +21,7 @@ app.use('/api', orderRoute);
 
 // MongoDB Connection
 mongoose
-    .connect(MONGO_URI)
+    .connect(process.env.MONGO_URI)
     .then(() => console.log("MongoDB connected"))
     .catch((err) => console.error('Failed to connect to MongoDB', err));
 
