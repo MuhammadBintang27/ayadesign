@@ -12,9 +12,9 @@ app.use(cors());
 app.use(express.json());
 
 // Routes
-app.use('/api/auth', authRouter);
+app.use('/auth', authRouter);
 app.use('/uploads', express.static(path.join(__dirname, '../../client/public/uploads'))); // Serving static files
-app.use('/api', orderRoute);
+app.use('/', orderRoute);
 app.get('/', (req, res) => {
     res.send('Server is up and running!');
 })
