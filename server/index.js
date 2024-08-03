@@ -8,7 +8,11 @@ const orderRoute = require('./routes/orderRoute');
 mongoose.set('strictQuery', true);
 
 // Middlewares
-app.use(cors());
+app.use(cors(
+    {
+        origin: 'https://ayadesign.vercel.app'
+    }
+));
 app.use(express.json());
 
 // Routes
