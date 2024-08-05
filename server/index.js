@@ -17,7 +17,6 @@ app.use(cors({
     credentials: true,
     allowedHeaders: ['Content-Type', 'Authorization']
 }));
-app.options('*', cors()); // Handle preflight request
 app.use(express.json());
 
 // Routes
@@ -49,7 +48,4 @@ app.use((err, req, res, next) => {
 });
 
 // Server
-const PORT = 3000;
-app.listen(PORT, () => {
-    console.log(`Server running on port ${PORT}`);
-});
+
