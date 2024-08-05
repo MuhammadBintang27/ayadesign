@@ -40,10 +40,8 @@ const ProductCatalog = () => {
 
     useEffect(() => {
         const fetchData = async () => {
-          console.log('Fetching data from API...');
           try {
-            const response = await axios.get(baseURL + '/imageCaraousel');
-            console.log('Data fetched:', response.data);
+            const response = await axios.get( '/imageCaraousel');
             setPhotocardItems(response.data.photocardItems || []);
             setBannerItems(response.data.bannerItems || []);
           } catch (error) {
