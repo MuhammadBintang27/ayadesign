@@ -9,7 +9,10 @@ mongoose.set('strictQuery', true);
 
 // Middlewares
 app.use(cors({
-    origin: '*',
+    origin: [
+        'https://ayadesign.vercel.app',
+        'https://ayadesign-muhammadbintang27s-projects.vercel.app'
+    ],
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
     credentials: true,
     allowedHeaders: ['Content-Type', 'Authorization']
