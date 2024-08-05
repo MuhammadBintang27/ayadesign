@@ -27,10 +27,6 @@ app.get('/', (req, res) => {
     res.send('Server is up and running!');
 })
 
-
-
-
-
 // MongoDB Connection
 mongoose
     .connect(process.env.MONGO_URI)
@@ -48,4 +44,7 @@ app.use((err, req, res, next) => {
 });
 
 // Server
-
+const PORT = 3000;
+app.listen(PORT, () => {
+    console.log(`Server running on port ${PORT}`);
+});
