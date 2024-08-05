@@ -25,9 +25,7 @@ app.use('/', orderRoute);
 app.get('/', (req, res) => {
     res.send('Server is up and running!');
 })
-app.get('/test-cors', (req, res) => {
-    res.send('CORS is working!');
-});
+
 
 
 
