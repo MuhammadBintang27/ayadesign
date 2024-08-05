@@ -10,13 +10,14 @@ mongoose.set('strictQuery', true);
 // Middlewares
 app.use(cors({
     origin: [
-        'https://ayadesign.vercel.app/auth/signup',
+        'https://ayadesign.vercel.app',
         'https://ayadesign-muhammadbintang27s-projects.vercel.app'
     ],
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
     credentials: true,
     allowedHeaders: ['Content-Type', 'Authorization']
 }));
+app.options('*', cors()); // Handle preflight request
 app.use(express.json());
 
 // Routes
