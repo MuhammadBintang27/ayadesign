@@ -40,20 +40,17 @@ const ProductCatalog = () => {
 
     useEffect(() => {
         const fetchData = async () => {
-          try {
-            const response = await axios.get( '/imageCaraousel');
-            setPhotocardItems(response.data.photocardItems || []);
-            setBannerItems(response.data.bannerItems || []);
-          } catch (error) {
-            console.error('Error fetching data:', error);
-            // Display a user-friendly error message
-            alert('Failed to fetch data. Please try again later.');
-          }
+            try {
+                const response = await axios.get(baseURL + '/imageCaraousel');
+                setPhotocardItems(response.data.photocardItems);
+                setBannerItems(response.data.bannerItems);
+            } catch (error) {
+                console.error('Error fetching data:', error);
+            }
         };
-      
+
         fetchData();
-      }, []);
-      
+    }, []);
 
     const handleItemClick = (item) => {
         navigate(`/productdetail/${item.id}`, { state: { item } });
