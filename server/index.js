@@ -11,7 +11,8 @@ mongoose.set('strictQuery', true);
 app.use(cors({
     origin: [
         'https://ayadesign.vercel.app',
-        'https://ayadesign-muhammadbintang27s-projects.vercel.app'
+        'https://ayadesign-muhammadbintang27s-projects.vercel.app', 
+        'http://localhost:5173'
     ],
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
     credentials: true,
