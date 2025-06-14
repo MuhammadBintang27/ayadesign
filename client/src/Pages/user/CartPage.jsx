@@ -48,7 +48,7 @@ const CartPage = () => {
 
   const handleRemove = async (orderId) => {
     try {
-      const response = await fetch(baseURL + `/cart/${orderId}`, {
+      const response = await fetch(baseURL + `/api/cart/${orderId}`, {
         method: 'DELETE',
         headers: {
           'Authorization': `Bearer ${token}`, // Include token in header
