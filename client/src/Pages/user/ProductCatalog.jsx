@@ -41,8 +41,9 @@ const ProductCatalog = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                console.log(baseURL + '/api/imageCaraousel');
+                console.log(baseURL + '/api/imageCarousel');
                 const response = await axios.get(baseURL + '/api/imageCarousel');
+                console.log(response.data);
                 setPhotocardItems(response.data.photocardItems);
                 setBannerItems(response.data.bannerItems);
             } catch (error) {
