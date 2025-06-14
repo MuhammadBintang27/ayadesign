@@ -18,7 +18,7 @@ const CartPage = () => {
 
     const fetchOrders = async () => {
       try {
-        const response = await fetch(baseURL + '/cart', {
+        const response = await fetch(baseURL + '/api/cart', {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json',

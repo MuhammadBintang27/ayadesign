@@ -20,6 +20,12 @@ app.use(cors({
 }));
 app.use(express.json());
 
+// Request logging middleware
+app.use((req, res, next) => {
+    console.log(`${req.method} ${req.url}`);
+    next();
+});
+
 // Root route
 app.get('/', (req, res) => {
     res.send('Server is up and running!');
@@ -27,11 +33,12 @@ app.get('/', (req, res) => {
 
 // Routes
 app.use('/auth', authRouter);
-app.use('/uploads', express.static(path.join(__dirname, '../../client/public/uploads'))); // Serving static files
-app.use('/', orderRoute);
+app.use('/uploads', express.static(path.join(__dirname, 'uploads'))); // Updated path for uploads
+app.use('/api', orderRoute); // Added /api prefix for better organization
 
 // 404 handler
 app.use((req, res, next) => {
+    console.log(`404 - Route not found: ${req.method} ${req.url}`);
     res.status(404).json({
         status: 'error',
         message: 'Route not found'
@@ -46,6 +53,7 @@ mongoose
 
 // Global error handler
 app.use((err, req, res, next) => {
+    console.error('Error:', err);
     err.status = err.status || 'error';
     err.statusCode = err.statusCode || 500;
     res.status(err.statusCode).json({

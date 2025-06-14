@@ -46,7 +46,7 @@ const ProductDetail = () => {
         setFormData(newData);
 
         try {
-            const response = await fetch(baseURL + '/cart', {
+            const response = await fetch(baseURL + '/api/cart', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
