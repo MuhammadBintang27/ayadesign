@@ -79,7 +79,7 @@ const CartPage = () => {
 
   const handleCheckout = async () => {
     try {
-        const response = await fetch(baseURL + '/checkout', {
+        const response = await fetch(baseURL + '/api/checkout', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
