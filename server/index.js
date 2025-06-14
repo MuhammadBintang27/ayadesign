@@ -12,7 +12,8 @@ app.use(cors({
     origin: [
         'https://ayadesign.vercel.app',
         'https://ayadesign-muhammadbintang27s-projects.vercel.app', 
-        'http://localhost:5173'
+        'http://localhost:5173',
+        'https://ayadesign-platform.vercel.app/'
     ],
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
     credentials: true,
