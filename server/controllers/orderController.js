@@ -18,7 +18,7 @@ exports.addToCart = async (req, res) => {
         }
 
         // Convert user_id to ObjectId
-        const userIdObj = mongoose.Types.ObjectId(user_id);
+        const userIdObj = new mongoose.Types.ObjectId(user_id);
 
         // Find the user by ID
         const user = await User.findById(userIdObj);
